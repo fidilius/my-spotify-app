@@ -1,0 +1,20 @@
+button {
+  margin-top: 10px;
+  background-color: rgba(29, 185, 84, 0.8);
+  box-shadow: 0 4px #1db95450;
+  color: white;
+  border-radius: 4px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+button:active {
+  position: relative;
+  top: 4px;
+  box-shadow: none;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: rgb(29, 185, 84);
+}
