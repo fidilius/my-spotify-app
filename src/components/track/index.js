@@ -1,14 +1,14 @@
 import './index.css';
-import {H2, H3} from '../header';
-import Image from '../image';
+import {Title, Artist} from '../textSong';
+import AlbumImage from '../albumImage';
 import Button from '../button';
 
 const track = ({srcAlbum, textTitle, textArtist}) => {
     return (
         <div className='track'>
-            <Image src={srcAlbum} alt={textTitle} />
-            <H2 text={textTitle} />
-            <H3 text={textArtist} />
+            <AlbumImage src={srcAlbum} alt={textTitle} />
+            <Title text={textTitle} />
+            <Artist text={textArtist} />
             <Button text={'Select'} />
         </div>
     );

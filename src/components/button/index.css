@@ -1,4 +1,4 @@
-button {
+.btnTrack {
   margin-top: 10px;
   background-color: rgba(29, 185, 84, 0.8);
   box-shadow: 0 4px #1db95450;
@@ -8,13 +8,13 @@ button {
   font-weight: bold;
 }
 
-button:active {
+.btnTrack:active {
   position: relative;
   top: 4px;
   box-shadow: none;
 }
 
-button:hover {
+.btnTrack:hover {
   cursor: pointer;
   background-color: rgb(29, 185, 84);
 }

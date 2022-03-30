@@ -1,9 +1,9 @@
 import './index.css';
 
-const Button = (props) => {
+const btnTrack = (props) => {
     return (
-        <button>{props.text}</button>
+        <button className='btnTrack'>{props.text}</button>
     );
 }
 
-export default Button;
+export default btnTrack;
