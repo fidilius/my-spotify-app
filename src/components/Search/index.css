@@ -1,0 +1,41 @@
+.tableSearchResult {
+  margin: 0 auto;
+  border-spacing: 20px 0;
+}
+
+.tableSearchResult td {
+  text-align: left;
+}
+
+.lightText {
+  color: #ccc;
+}
+
+.artist {
+  color: #ccc;
+  margin-top: -15px;
+}
+
+.songName {
+  min-width: 600px;
+}
+
+.btnSearch {
+  margin-top: 30px;
+  margin-left: 5px;
+  background-color: rgba(29, 185, 84, 0.8);
+  color: white;
+  border-radius: 40px;
+  padding: 8px;
+  font-weight: bold;
+}
+
+.btnSearch:hover {
+  cursor: pointer;
+  background-color: rgb(29, 185, 84);
+}
+
+.inputSearch {
+  padding: 7px 13px;
+  border-radius: 40px;
+}
