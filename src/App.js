@@ -12,8 +12,8 @@ function App() {
         <Search />
       </div>
       <div className="tracks">
-        {data.map((track) => {
-          return <Track key={track.album.id} srcAlbum={track.album.images[1].url} textTitle={track.album.name} textArtist={track.artists[0].name}/>
+        {data.map((track, index) => {
+          return <Track key={track.album.id + index} srcAlbum={track.album.images[1].url} textTitle={track.album.name} textArtist={track.artists[0].name}/>
         })}
       </div>
     </div>
