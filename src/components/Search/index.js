@@ -1,5 +1,6 @@
 import './index.css';
 import React, { useState } from "react";
+import Playlist from '../Playlist';
 
 const Search = () => {
     const [songs, setSongs] = useState([]);
@@ -12,7 +13,7 @@ const Search = () => {
                     'Authorization': 'Bearer ' + localStorage.getItem('access_token')
                 }
             }).then(response => response.json())
-            .then(json => json.tracks.items);   
+            .then(json => json.tracks.items)   
         setSongs(songs);
     }
 
@@ -26,12 +27,12 @@ const Search = () => {
         return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     }
 
-    const handleSelectBtn = (id) => {
-        const indexSelectedSong = selectedSong.indexOf(id);
+    const handleSelectBtn = (uri) => {
+        const indexSelectedSong = selectedSong.indexOf(uri);
 
         const newSelectedSong = [...selectedSong];
 
-        (indexSelectedSong < 0) ? newSelectedSong.push(id) : newSelectedSong.splice(indexSelectedSong, 1);
+        (indexSelectedSong < 0) ? newSelectedSong.push(uri) : newSelectedSong.splice(indexSelectedSong, 1);
 
         setSelectedSong(newSelectedSong);
     };
@@ -60,7 +61,7 @@ const Search = () => {
                     </thead>
                     <tbody>
                         {songs.map((song, index) => {
-                        const isSelected = selectedSong.includes(song.id);
+                        const isSelected = selectedSong.includes(song.uri);
                             return(
                                 <tr key={song.album.name + index}>
                                     <td><p className="lightText">{index+1}</p></td>
@@ -71,7 +72,7 @@ const Search = () => {
                                     </td>
                                     <td><p className="lightText">{song.album.name}</p></td>
                                     <td><p className="lightText">{msToMin(song.duration_ms)}</p></td>
-                                    <td><input type="button" onClick={() => handleSelectBtn(song.id)} className="handleSelectBtn" value={isSelected ? "Deselect" : "Select"} /></td>
+                                    <td><input type="button" onClick={() => handleSelectBtn(song.uri)} className="handleSelectBtn" value={isSelected ? "Deselect" : "Select"} /></td>
                                 </tr>
                             )
                         })}
@@ -79,6 +80,7 @@ const Search = () => {
                 </table>
                 </>
             )}
+            <Playlist songs={selectedSong} />
             </>
         )
     
