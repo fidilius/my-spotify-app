@@ -1,22 +1,15 @@
 import './App.css';
-import Track from './components/track';
-import data from './data/data.js';
-import Login from './components/Login';
-import Search from './components/Search';
+import Home from './pages/home';
+import { Provider } from 'react-redux';
+import store from './store';
 
 function App() {
   return (
-    <div className="App">
-      <div className="search">
-        <Login />
-        <Search />
+    <Provider store={store}>
+      <div className="App">
+        <Home />
       </div>
-      <div className="tracks">
-        {data.map((track, index) => {
-          return <Track key={track.album.id + index} srcAlbum={track.album.images[1].url} textTitle={track.album.name} textArtist={track.artists[0].name}/>
-        })}
-      </div>
-    </div>
+    </Provider>
   );
 }
 

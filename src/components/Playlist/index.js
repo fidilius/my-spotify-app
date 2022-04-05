@@ -1,14 +1,16 @@
 import "./index.css";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Playlist = ({songs}) => {
     const [playlist, setPlaylist] = useState({title: '', description: ''});
+    const access_token = useSelector(state => state.token.access_token);
 
     const createPlaylist = async () => {
         await fetch('https://api.spotify.com/v1/me/playlists', {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                'Authorization': 'Bearer ' + access_token,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -23,7 +25,7 @@ const Playlist = ({songs}) => {
             fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+                    'Authorization': 'Bearer ' + access_token,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({

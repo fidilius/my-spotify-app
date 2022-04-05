@@ -1,5 +1,7 @@
 import './index.css';
-import { useEffect } from "react";
+import { useEffect} from "react";
+import { useDispatch } from "react-redux";
+import { saveToken } from '../../token-slice';
 
 const CLIENT_ID = process.env.REACT_APP_SPOTIFY_KEY;
 const SPOTIFY_AUTHORIZE_URL = 'https://accounts.spotify.com/authorize';
@@ -20,12 +22,13 @@ const getReturnedToken = (hash) => {
 }
 
 const Login = () => {
+    const dispatch = useDispatch();
+
     useEffect(() => {
         if (window.location.hash) {
-            const { 
-                access_token
-            } = getReturnedToken(window.location.hash);
-            localStorage.setItem('access_token', access_token);
+            const { access_token } = getReturnedToken(window.location.hash);
+            // localStorage.setItem('access_token', access_token);
+            dispatch(saveToken(access_token));
         }
     });
     const handleLogin = () => {

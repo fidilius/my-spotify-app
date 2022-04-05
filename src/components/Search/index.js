@@ -1,16 +1,18 @@
 import './index.css';
 import React, { useState } from "react";
 import Playlist from '../Playlist';
+import { useSelector } from 'react-redux';
 
 const Search = () => {
     const [songs, setSongs] = useState([]);
     const [search, setSearch] = useState('');
     const [selectedSong, setSelectedSong] = useState([]);
+    const access_token = useSelector(state => state.token.access_token);
 
     const searchSongs = async() => {
-        const songs = await fetch('https://api.spotify.com/v1/search?q=' + search + '&type=track&limit=10', {
+        const songs = await fetch(`https://api.spotify.com/v1/search?q=${search}&type=track&limit=10`, {
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                    'Authorization': 'Bearer ' + access_token
                 }
             }).then(response => response.json())
             .then(json => json.tracks.items)   
