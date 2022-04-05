@@ -36,17 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-/* my css */
-.tracks {
-  display: flex;
-  flex-wrap: wrap;
-  background-color: #212121;
-}
-
-.search {
-  padding-top: 20px;
-  background-color: #212121;
-  color: white;
-}
-/* my css */
