@@ -1,17 +1,23 @@
 import './index.css';
-import {Title, Artist} from '../textSong';
-import AlbumImage from '../albumImage';
-import Button from '../button';
+import data from '../../data/data.js';
+import {Title, Artist} from './components/textSong';
+import AlbumImage from './components/albumImage';
+import Button from './components/button';
 
-const track = ({srcAlbum, textTitle, textArtist}) => {
+const Track = () => {
+
     return (
-        <div className='track'>
-            <AlbumImage src={srcAlbum} alt={textTitle} />
-            <Title text={textTitle} />
-            <Artist text={textArtist} />
-            <Button text={'Select'} />
-        </div>
-    );
+        data.map((d,i) => {
+            return (
+                <div className='track' key={d.album.id+i}>
+                    <AlbumImage src={d.album.images[1].url} alt={d.album.name} />
+                    <Title text={d.album.name} />
+                    <Artist text={d.artists[0].name} />
+                    <Button text={'Select'} />
+                </div>
+            )    
+        })
+    )
 };
 
-export default track;
+export default Track;

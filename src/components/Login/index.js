@@ -1,7 +1,7 @@
 import './index.css';
 import { useEffect} from "react";
 import { useDispatch } from "react-redux";
-import { saveToken } from '../../token-slice';
+import { saveToken } from '../../slice/token-slice';
 
 const CLIENT_ID = process.env.REACT_APP_SPOTIFY_KEY;
 const SPOTIFY_AUTHORIZE_URL = 'https://accounts.spotify.com/authorize';

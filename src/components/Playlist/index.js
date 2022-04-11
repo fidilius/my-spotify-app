@@ -1,44 +1,44 @@
 import "./index.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import axios from 'axios';
 
 const Playlist = ({songs}) => {
-    const [playlist, setPlaylist] = useState({title: '', description: ''});
-    const access_token = useSelector(state => state.token.access_token);
+    const [playlist, setPlaylist] = useState({name: '', description: ''});
+    const {access_token} = useSelector(state => state.token);
 
     const createPlaylist = async () => {
-        await fetch('https://api.spotify.com/v1/me/playlists', {
-            method: 'POST',
+        const{name, description} = playlist;
+        await axios.post('https://api.spotify.com/v1/me/playlists', {
+            name,
+            description,
+            public: false,
+            collaborative: false
+        }, {
             headers: {
                 'Authorization': 'Bearer ' + access_token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: playlist.title,
-                description: playlist.description,
-                public: false
-            })
+            }
         })
-        .then(response => response.json())
-        .then(json => {
-            const id = json.id;
-            fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
-                method: 'POST',
+        .then(response => {
+            const {id} = response.data;
+            axios.post(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
+                uris: songs
+            }, {
                 headers: {
                     'Authorization': 'Bearer ' + access_token,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    uris: songs
-                })
+                }
             })
         })
-        alert(`Playlist ${playlist.title} created!`);        
+        alert(`Playlist ${name} created! Check your Spotify account.`);        
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        playlist.title.length >= 10 ? createPlaylist() : alert('The title must be at least 10 characters long');
+        if(songs.length === 0){
+            alert('Please select songs!');
+            return false;
+        }
+        playlist.name.length >= 10 ? createPlaylist() : alert('The title must be at least 10 characters long');
     }
 
     const handleInputChange = (e) => {
@@ -54,7 +54,7 @@ const Playlist = ({songs}) => {
                     <tbody>
                         <tr>
                             <td><label htmlFor="title">Title:</label></td>
-                            <td><input type="text" name="title" onChange={handleInputChange} /></td>
+                            <td><input type="text" name="name" onChange={handleInputChange} placeholder='must be at least 10 characters'/></td>
                         </tr>
                         <tr>
                             <td><label htmlFor="description">Description:</label></td>

@@ -1,6 +1,5 @@
 import './index.css'
-import data from '../../data/data.js';
-import Track from '../../components/track'
+import Track from '../../components/Track'
 import Login from '../../components/Login';
 import Search from '../../components/Search';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
@@ -8,9 +7,8 @@ import { useSelector } from 'react-redux';
 
 
 const Home = () => {
-    const isLogin = useSelector(state => state.token.access_token) !== '';
+    const isLogin = useSelector(state => state.token.isLogin);
     console.log(isLogin);
-
 
     return(
         <div>
@@ -28,10 +26,9 @@ const Home = () => {
                     </Switch>
                 </Router>
             </div>
+
             <div className="tracks">
-                {data.map((track, index) => {
-                    return <Track key={track.album.id + index} srcAlbum={track.album.images[1].url} textTitle={track.album.name} textArtist={track.artists[0].name}/>
-                })}
+                <Track />
             </div>
         </div>
     )
