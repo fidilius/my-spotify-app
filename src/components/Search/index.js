@@ -67,38 +67,22 @@ const Search = () => {
             <>
             <h2>Songs List:</h2>
             <table className="tableSearchResult">
-                <thead>
-                    <tr>
-                        <td><p className="lightText">#</p></td>
-                        <td colSpan='2'>
-                            <p className="lightText">TITLE</p>
-                        </td>
-                        <td>
-                            <p className="lightText">ALBUM</p>
-                        </td>
-                        <td>
-                            <p className="lightText">DURATION</p>
-                        </td>
-                    </tr>
-                </thead>
-                <tbody>
                     {songs.map((song, index) => {
                     const isSelected = selectedSong.includes(song.uri);
                         return(
-                            <tr key={song.album.name + index}>
-                                <td><p className="lightText">{index+1}</p></td>
-                                <td><img src={song.album.images[2].url} alt="song" key={song.id}/></td>
-                                <td className="songName">
+                            <td key={song.album.name + index}>
+                                <img src={song.album.images[2].url} alt="song" key={song.id}/>
+                                <div className="songInfo">
                                     <h3>{song.name}</h3>
-                                    <p className="artist">{song.artists[0].name}</p>
-                                </td>
-                                <td><p className="lightText">{song.album.name}</p></td>
-                                <td><p className="lightText">{msToMin(song.duration_ms)}</p></td>
-                                <td><input type="button" onClick={() => selectButtonHandler(song.uri)} className="selectButtonHandler" value={isSelected ? "Deselect" : "Select"} /></td>
-                            </tr>
+                                    <p className="lightText">{song.artists[0].name}</p>
+                                    <p className="lightText">{song.album.name}</p>
+                                    <input type="button" onClick={() => selectButtonHandler(song.uri)} className="selectButtonHandler" value={isSelected ? "Deselect" : "Select"} />
+                                </div>
+                                <p className="lightText duration">{msToMin(song.duration_ms)}</p>
+
+                            </td>
                         )
                     })}
-                </tbody>
             </table>
             </>
         )}
