@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Playlist from '../Playlist';
+import FormSearch from './components/FormSearch';
 
 const Search = () => {
     const [songs, setSongs] = useState([]);
@@ -60,30 +61,28 @@ const Search = () => {
 
     return(
         <>
-        <input onChange={inputHandler} className="inputSearch" type='search' placeholder='Artists, songs or albums'/>
-        <button onClick={searchButtonHandler} className="btnSearch">Search</button>
-        <button onClick={resetButtonHandler} className="btnReset">Reset</button>
+        <FormSearch onChange={inputHandler} onSearch={searchButtonHandler} onReset={resetButtonHandler}/>
         {songs.length > 0 && (
             <>
             <h2>Songs List:</h2>
-            <table className="tableSearchResult">
+            <div className="tableSearchResult">
                     {songs.map((song, index) => {
-                    const isSelected = selectedSong.includes(song.uri);
+                    const {name, artists, album, uri, duration_ms, id} = song;
+                    const isSelected = selectedSong.includes(uri);
                         return(
-                            <td key={song.album.name + index}>
-                                <img src={song.album.images[2].url} alt="song" key={song.id}/>
+                            <div className='td' key={id+index}>
+                                <img src={album.images[2].url} alt="song" />
                                 <div className="songInfo">
-                                    <h3>{song.name}</h3>
-                                    <p className="lightText">{song.artists[0].name}</p>
-                                    <p className="lightText">{song.album.name}</p>
-                                    <input type="button" onClick={() => selectButtonHandler(song.uri)} className="selectButtonHandler" value={isSelected ? "Deselect" : "Select"} />
+                                    <h3>{name}</h3>
+                                    <p className="lightText">{artists[0].name}</p>
+                                    <p className="lightText">{album.name}</p>
+                                    <input type="button" onClick={() => selectButtonHandler(uri)} className="selectButtonHandler" value={isSelected ? "Deselect" : "Select"} />
                                 </div>
-                                <p className="lightText duration">{msToMin(song.duration_ms)}</p>
-
-                            </td>
+                                <p className="lightText duration">{msToMin(duration_ms)}</p>
+                            </div>
                         )
                     })}
-            </table>
+            </div>
             </>
         )}
         <Playlist songs={selectedSong} />
