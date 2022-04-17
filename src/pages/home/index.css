@@ -1,11 +1,15 @@
+.home {
+  text-align: center;
+}
+
 .tracks {
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #212121;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #212121;
+}
   
 .search {
-padding-top: 20px;
-background-color: #212121;
-color: white;
+  padding-top: 20px;
+  background-color: #212121;
+  color: white;
 }

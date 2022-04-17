@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Button, TextField, Stack } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
@@ -25,7 +26,13 @@ const ButtonReset = styled(Button)`
     }
 `;
 
-export default function FormSearch({ onChange, onSearch, onReset}) {
+interface IFSProps {
+    onSearch: () => void;
+    onReset: () => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const FormSearch:React.FC<IFSProps> = ({ onChange, onSearch, onReset}) => {
     return(
         <Stack direction="row" spacing={1} justifyContent="center" alignItems="center" >
             <InputSearch  
@@ -47,3 +54,5 @@ export default function FormSearch({ onChange, onSearch, onReset}) {
         </Stack>
     )
 }
+
+export default FormSearch;

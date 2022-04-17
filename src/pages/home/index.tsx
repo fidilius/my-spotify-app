@@ -5,13 +5,18 @@ import Search from '../../components/Search';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+interface State {
+    token: {
+        isLogin: boolean;
+    }
+}
 
 const Home = () => {
-    const isLogin = useSelector(state => state.token.isLogin);
+    const { isLogin } = useSelector((state:State) => state.token);
     console.log(isLogin);
 
     return(
-        <div>
+        <div className='home'>
             <div className="search">
                 <Router>
                     <Switch>

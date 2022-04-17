@@ -1,6 +1,7 @@
 .tableSearchResult {
   display: grid;
   grid-template: repeat(5, 20%) / repeat(2, 50%);
+  grid-template-rows: minmax(0, auto);
 }
 
 .tableSearchResult .td {

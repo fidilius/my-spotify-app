@@ -1,11 +1,18 @@
+import * as React from 'react';
 import "./index.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from 'axios';
 
-const Playlist = ({songs}) => {
+interface State {
+    token: {
+        access_token: string;
+    }
+}
+
+const Playlist: React.FC<{songs:string[]}> = ({songs}) => {
     const [playlist, setPlaylist] = useState({name: '', description: ''});
-    const {access_token} = useSelector(state => state.token);
+    const {access_token} = useSelector((state:State) => state.token);
 
     const createPlaylist = async () => {
         const{name, description} = playlist;
@@ -32,7 +39,7 @@ const Playlist = ({songs}) => {
         alert(`Playlist ${name} created! Check your Spotify account.`);        
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         if(songs.length === 0){
             alert('Please select songs!');
@@ -41,7 +48,7 @@ const Playlist = ({songs}) => {
         playlist.name.length >= 10 ? createPlaylist() : alert('The title must be at least 10 characters long');
     }
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: { target: { name: string; value: string; }; }) => {
         const { name, value } = e.target;
         setPlaylist({...playlist, [name]: value});
     }

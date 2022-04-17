@@ -5,11 +5,37 @@ import axios from 'axios';
 import Playlist from '../Playlist';
 import FormSearch from './components/FormSearch';
 
+interface State {
+    token: {
+        access_token: string;
+    }
+}
+
 const Search = () => {
-    const [songs, setSongs] = useState([]);
+    const [songs, setSongs] = useState([
+        {
+            id: '',
+            name: '',
+            artists: [
+                {
+                    name: '',
+                }
+            ],
+            album: {
+                images: [
+                    {
+                        url: '',
+                    }
+                ],
+                name: '',
+            },
+            uri: '',
+            duration_ms: 0,
+        },
+    ]);
     const [keyword, setKeyword] = useState('');
-    const [selectedSong, setSelectedSong] = useState([]);
-    const {access_token} = useSelector(state => state.token);
+    const [selectedSong, setSelectedSong] = useState<string[]>([]);
+    const {access_token} = useSelector((state:State) => state.token);
 
     const searchSongs = useCallback(async() => {
         const songs = await axios.get(`https://api.spotify.com/v1/search?q=${keyword}&type=track&limit=10`, {
@@ -29,7 +55,7 @@ const Search = () => {
         }
     }, [keyword, searchSongs]);
 
-    const inputHandler = (e) => {
+    const inputHandler = (e: { target: { value: React.SetStateAction<string>; }; }) => {
         setKeyword(e.target.value);
     }
 
@@ -45,7 +71,7 @@ const Search = () => {
         setSelectedSong([]);
     };
     
-    const selectButtonHandler = (uri) => {
+    const selectButtonHandler = (uri: string) => {
         const indexSelectedSong = selectedSong.indexOf(uri);
         const newSelectedSong = [...selectedSong];
         (indexSelectedSong < 0) ? newSelectedSong.push(uri) : newSelectedSong.splice(indexSelectedSong, 1);
@@ -53,10 +79,10 @@ const Search = () => {
     };
     
     
-    const msToMin = (millis) => {
+    const msToMin = (millis: number) => {
         let minutes = Math.floor(millis / 60000);
         let seconds = ((millis % 60000) / 1000).toFixed(0);
-        return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+        return minutes + ":" + (seconds < '10' ? '0' : '') + seconds;
     }
 
     return(
@@ -71,7 +97,7 @@ const Search = () => {
                     const isSelected = selectedSong.includes(uri);
                         return(
                             <div className='td' key={id+index}>
-                                <img src={album.images[2].url} alt="song" />
+                                <img src={album.images[0].url} alt={name} />
                                 <div className="songInfo">
                                     <h3>{name}</h3>
                                     <p className="lightText">{artists[0].name}</p>

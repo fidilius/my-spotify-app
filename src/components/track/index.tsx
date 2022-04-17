@@ -1,11 +1,10 @@
 import './index.css';
-import data from '../../data/data.js';
 import {Title, Artist} from './components/textSong';
 import AlbumImage from './components/albumImage';
 import Button from './components/button';
+import data from '../../data/data';
 
-const Track = () => {
-
+const Track: Function = () => {
     return (
         data.map((d,i) => {
             return (
@@ -13,7 +12,7 @@ const Track = () => {
                     <AlbumImage src={d.album.images[1].url} alt={d.album.name} />
                     <Title text={d.album.name} />
                     <Artist text={d.artists[0].name} />
-                    <Button text={'Select'} />
+                    <Button />
                 </div>
             )    
         })
