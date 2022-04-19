@@ -54,7 +54,7 @@ const Playlist: React.FC<{songs:string[]}> = ({songs}) => {
     }
 
     return(
-        <div className="playlist">
+        <div data-testid="playlist" className="playlist">
             <h2>Playlist</h2>
             <form>
                 <table className="tablePlaylist">

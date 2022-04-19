@@ -32,7 +32,7 @@ const Home = () => {
                 </Router>
             </div>
 
-            <div className="tracks">
+            <div data-testid='tracks' className="tracks">
                 <Track />
             </div>
         </div>

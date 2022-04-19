@@ -87,31 +87,33 @@ const Search = () => {
 
     return(
         <>
-        <FormSearch onChange={inputHandler} onSearch={searchButtonHandler} onReset={resetButtonHandler}/>
-        {songs.length > 0 && (
-            <>
-            <h2>Songs List:</h2>
-            <div className="tableSearchResult">
-                    {songs.map((song, index) => {
-                    const {name, artists, album, uri, duration_ms, id} = song;
-                    const isSelected = selectedSong.includes(uri);
-                        return(
-                            <div className='td' key={id+index}>
-                                <img src={album.images[0].url} alt={name} />
-                                <div className="songInfo">
-                                    <h3>{name}</h3>
-                                    <p className="lightText">{artists[0].name}</p>
-                                    <p className="lightText">{album.name}</p>
-                                    <input type="button" onClick={() => selectButtonHandler(uri)} className="selectButtonHandler" value={isSelected ? "Deselect" : "Select"} />
-                                </div>
-                                <p className="lightText duration">{msToMin(duration_ms)}</p>
-                            </div>
-                        )
-                    })}
+            <FormSearch onChange={inputHandler} onSearch={searchButtonHandler} onReset={resetButtonHandler}/>
+            <div >
+                {songs.length > 0 && (
+                    <>
+                    <h2>Songs List:</h2>
+                    <div data-testid="resultSearch" className="tableSearchResult">
+                            {songs.map((song, index) => {
+                            const {name, artists, album, uri, duration_ms, id} = song;
+                            const isSelected = selectedSong.includes(uri);
+                                return(
+                                    <div className='td' key={id+index}>
+                                        <img src={album.images[0].url} alt={name} />
+                                        <div className="songInfo">
+                                            <h3>{name}</h3>
+                                            <p className="lightText">{artists[0].name}</p>
+                                            <p className="lightText">{album.name}</p>
+                                            <input type="button" onClick={() => selectButtonHandler(uri)} className="selectButtonHandler" value={isSelected ? "Deselect" : "Select"} />
+                                        </div>
+                                        <p className="lightText duration">{msToMin(duration_ms)}</p>
+                                    </div>
+                                )
+                            })}
+                    </div>
+                    </>
+                )}
             </div>
-            </>
-        )}
-        <Playlist songs={selectedSong} />
+            <Playlist songs={selectedSong} />
         </>
     )
 }

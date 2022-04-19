@@ -8,7 +8,7 @@ const Track: Function = () => {
     return (
         data.map((d,i) => {
             return (
-                <div className='track' key={d.album.id+i}>
+                <div data-testid='track' className='track' key={d.album.id+i}>
                     <AlbumImage src={d.album.images[1].url} alt={d.album.name} />
                     <Title text={d.album.name} />
                     <Artist text={d.artists[0].name} />

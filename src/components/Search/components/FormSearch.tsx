@@ -34,7 +34,7 @@ interface IFSProps {
 
 const FormSearch:React.FC<IFSProps> = ({ onChange, onSearch, onReset}) => {
     return(
-        <Stack direction="row" spacing={1} justifyContent="center" alignItems="center" >
+        <Stack data-testid="formSearch" direction="row" spacing={1} justifyContent="center" alignItems="center" >
             <InputSearch  
                 size='small' 
                 onChange={onChange} 

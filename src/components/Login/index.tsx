@@ -39,7 +39,7 @@ const Login = () => {
     }
 
     return(
-        <button onClick={handleLogin} className="btnLogin">Login</button>
+        <button data-testid='btnLogin' onClick={handleLogin} className="btnLogin">Login</button>
     )
 }
 
