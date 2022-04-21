@@ -1,7 +1,7 @@
 import './index.css';
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { searchSongs } from '../../lib/fetchAPI';
 import Playlist from '../Playlist';
 import FormSearch from './components/FormSearch';
 
@@ -11,49 +11,39 @@ interface State {
     }
 }
 
-const Search = () => {
-    const [songs, setSongs] = useState([
+interface ISongs {
+    id: '',
+    name: '',
+    artists: [
         {
-            id: '',
             name: '',
-            artists: [
-                {
-                    name: '',
-                }
-            ],
-            album: {
-                images: [
-                    {
-                        url: '',
-                    }
-                ],
-                name: '',
-            },
-            uri: '',
-            duration_ms: 0,
-        },
-    ]);
+        }
+    ],
+    album: {
+        images: [
+            {
+                url: '',
+            }
+        ],
+        name: '',
+    },
+    uri: '',
+    duration_ms: 0,
+}
+
+const Search = () => {
+    const [songs, setSongs] = useState<ISongs[]>([]);
     const [keyword, setKeyword] = useState('');
     const [selectedSong, setSelectedSong] = useState<string[]>([]);
-    const {access_token} = useSelector((state:State) => state.token);
-
-    const searchSongs = useCallback(async() => {
-        const songs = await axios.get(`https://api.spotify.com/v1/search?q=${keyword}&type=track&limit=10`, {
-                headers: {
-                    'Authorization': 'Bearer ' + access_token
-                }
-            })
-            .then(response => response.data.tracks.items)   
-        setSongs(songs);
-    }, [keyword, access_token]);
+    const { access_token } = useSelector((state:State) => state.token);
 
     useEffect(() => {
         if (keyword.length === 0) {
             setSongs([]);
         } else if(keyword.length > 2){
-            searchSongs();
+            searchSongs(keyword, access_token, setSongs);
         }
-    }, [keyword, searchSongs]);
+    }, [keyword, access_token]);
 
     const inputHandler = (e: { target: { value: React.SetStateAction<string>; }; }) => {
         setKeyword(e.target.value);
@@ -64,7 +54,7 @@ const Search = () => {
             alert('Please enter a keyword!');
             return false;
         }
-        searchSongs();
+        searchSongs(keyword, access_token, setSongs);
     }
 
     const resetButtonHandler = () => {

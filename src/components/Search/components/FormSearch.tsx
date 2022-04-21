@@ -1,30 +1,33 @@
 import * as React from 'react';
 import { Button, TextField, Stack } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
+import { Search as SearchIcon, RestartAlt as ResetIcon } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 
-const InputSearch = styled(TextField)`
-    background-color: #fff;
-    margin-left: 140px;
-`;
 
-const ButtonSearch = styled(Button)`
-    background-color: rgba(29, 185, 84, 0.8);
-    color: white;
-    text-transform: none;
-    :hover {
-        background-color: rgb(29, 185, 84);
-    }
-`;
+const InputSearch = styled(TextField)({
+    backgroundColor: "#fff",
+    marginLeft: "200px"
+})
 
-const ButtonReset = styled(Button)`
-    background-color: rgb(228, 228, 228);
-    color: rgb(48, 48, 48);
-    text-transform: none;
-    :hover {
-        background-color: rgb(243, 242, 242);
+const ButtonSearch = styled(Button)({
+    borderRadius: '40px',
+    textTransform: "none",
+    color: "white",
+    backgroundColor: "rgba(29, 185, 84, 0.8)",
+    "&:hover": {
+        backgroundColor: "rgb(29, 185, 84)",
     }
-`;
+});
+
+const ButtonReset = styled(Button)({
+    borderRadius: '40px',
+    textTransform: "none",
+    color: "rgb(48, 48, 48)",
+    backgroundColor: "rgb(228, 228, 228)",
+    "&:hover": {
+        backgroundColor: "rgb(243, 242, 242)"
+    }
+});
 
 interface IFSProps {
     onSearch: () => void;
@@ -48,7 +51,8 @@ const FormSearch:React.FC<IFSProps> = ({ onChange, onSearch, onReset}) => {
             </ButtonSearch>
             <ButtonReset 
                 variant="contained" 
-                onClick={onReset} 
+                onClick={onReset}
+                startIcon={<ResetIcon />} 
                 >Reset
             </ButtonReset>
         </Stack>
