@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from '../App';
 
 import Search from '../components/Search';
@@ -8,8 +8,7 @@ import store from '../store';
 
 test('renders Track components', () => {
   render(<App />);
-  const Tracks = screen.getByTestId('tracks');
-  const Track = within(Tracks).getAllByTestId('track');
+  const Track = screen.getAllByTestId('track');
   expect(Track.length).toBe(10);
 });
 

@@ -1,40 +1,22 @@
-import './index.css';
-import { useEffect} from "react";
-import { useDispatch } from "react-redux";
-import { saveToken } from '../../slice/token-slice';
 import url from '../../lib/spotify';
+import { Button } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-type Acc = { [key: string]: string };
-
-const getReturnedToken = (hash:string) => {
-    const stringAfterHastag = hash.substring(1);
-    const params = stringAfterHastag.split('&');
-    const paramsSplitUp = params.reduce<Acc>((acc:Acc, param) => {
-        // console.log(param);
-        const [key, value] = param.split('=');
-        acc[key] = value;
-        return acc;
-    }, {});
-
-    return paramsSplitUp;
-}
+const ButtonLogin = styled(Button)({
+    color: "white",
+    backgroundColor: "rgba(29, 185, 84, 0.8)",
+    "&:hover": {
+        backgroundColor: "rgb(29, 185, 84)",
+    }
+});
 
 const Login = () => {
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (window.location.hash) {
-            const { access_token } = getReturnedToken(window.location.hash);
-            dispatch(saveToken(access_token));
-            // localStorage.setItem('access_token', access_token);
-        }
-    });
     const handleLogin = () => {
         window.location.href = url;
     }
 
     return(
-        <button data-testid='btnLogin' onClick={handleLogin} className="btnLogin">Login</button>
+        <ButtonLogin data-testid='btnLogin' onClick={handleLogin} size='large'>Login</ButtonLogin>
     )
 }
 

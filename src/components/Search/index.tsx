@@ -1,9 +1,10 @@
-import './index.css';
 import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import { searchSongs } from '../../lib/fetchAPI';
 import Playlist from '../Playlist';
 import FormSearch from './components/FormSearch';
+import { Box, Grid, Card, CardContent, Button, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 interface State {
     token: {
@@ -23,6 +24,12 @@ interface ISongs {
         images: [
             {
                 url: '',
+            },
+            {
+                url: '',
+            },
+            {
+                url: '',
             }
         ],
         name: '',
@@ -30,6 +37,26 @@ interface ISongs {
     uri: '',
     duration_ms: 0,
 }
+
+const ButtonSelect = styled(Button)({
+    borderRadius: '40px',
+    textTransform: "none",
+    color: "white",
+    backgroundColor: "rgba(29, 185, 84, 0.8)",
+    "&:hover": {
+        backgroundColor: "rgb(29, 185, 84)",
+    }
+});
+
+const ButtonDeselect = styled(Button)({
+    borderRadius: '40px',
+    textTransform: "none",
+    color: "rgb(48, 48, 48)",
+    backgroundColor: "rgb(228, 228, 228)",
+    "&:hover": {
+        backgroundColor: "rgb(243, 242, 242)"
+    }
+});
 
 const Search = () => {
     const [songs, setSongs] = useState<ISongs[]>([]);
@@ -76,35 +103,64 @@ const Search = () => {
     }
 
     return(
-        <>
+        <Box padding={3} 
+            sx={{minHeight: "100vh",
+            backgroundColor: "#212121",
+            color: "white",
+            textAlign: "center"}}>
+
             <FormSearch onChange={inputHandler} onSearch={searchButtonHandler} onReset={resetButtonHandler}/>
-            <div >
+            <Box >
                 {songs.length > 0 && (
                     <>
-                    <h2>Songs List:</h2>
-                    <div data-testid="resultSearch" className="tableSearchResult">
+                    <Typography component='p' variant='h4' sx={{margin:"40px 0"}}>Songs List:</Typography>
+
+                    <Grid 
+                        data-testid="resultSearch" 
+                        container 
+                        spacing={2}
+                        sx={{ 
+                            backgroundColor: "#212121", 
+                            paddingBottom: "40px"}}>
+
                             {songs.map((song, index) => {
                             const {name, artists, album, uri, duration_ms, id} = song;
                             const isSelected = selectedSong.includes(uri);
                                 return(
-                                    <div className='td' key={id+index}>
-                                        <img src={album.images[0].url} alt={name} />
-                                        <div className="songInfo">
-                                            <h3>{name}</h3>
-                                            <p className="lightText">{artists[0].name}</p>
-                                            <p className="lightText">{album.name}</p>
-                                            <input type="button" onClick={() => selectButtonHandler(uri)} className="selectButtonHandler" value={isSelected ? "Deselect" : "Select"} />
-                                        </div>
-                                        <p className="lightText duration">{msToMin(duration_ms)}</p>
-                                    </div>
+                                    <Grid item xs={6} key={id+index}>
+
+                                        <Card
+                                            data-testid='track'  
+                                            sx={{ backgroundColor: "#5353533b",
+                                            display: 'flex', 
+                                            alignItems: "center", 
+                                            height: "100%",
+                                            '&:hover': {
+                                                backgroundColor: '#53535365',
+                                            }}} >
+                                                <CardContent sx={{flex: "1"}} >
+                                                    <img src={album.images[0].url} alt={name} width="130"/>
+                                                </CardContent>
+                                                <CardContent sx={{flex: "5", textAlign:"left", color: "white"}} >
+                                                    <h3>{name}</h3>
+                                                    <p >{artists[0].name}</p>
+                                                    <p >{album.name}</p>
+                                                    <p >{msToMin(duration_ms)}</p>
+                                                </CardContent>
+                                                <CardContent sx={{flex: "1"}} >
+                                                    {isSelected ? <ButtonDeselect onClick={() => selectButtonHandler(uri)} variant="contained">Deselect</ButtonDeselect> : <ButtonSelect onClick={() => selectButtonHandler(uri)} variant="contained">Select</ButtonSelect>}
+                                                </CardContent>
+
+                                        </Card>
+                                    </Grid>
                                 )
                             })}
-                    </div>
+                    </Grid>
                     </>
                 )}
-            </div>
+            </Box>
             <Playlist songs={selectedSong} />
-        </>
+        </Box>
     )
 }
 

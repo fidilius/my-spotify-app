@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 
 const InputSearch = styled(TextField)({
     backgroundColor: "#fff",
-    marginLeft: "200px"
+    marginLeft: "270px"
 })
 
 const ButtonSearch = styled(Button)({
@@ -43,13 +43,15 @@ const FormSearch:React.FC<IFSProps> = ({ onChange, onSearch, onReset}) => {
                 onChange={onChange} 
                 type='search'
                 placeholder='Artists, songs or albums'/>
-            <ButtonSearch 
+            <ButtonSearch
+                size="large" 
                 variant="contained" 
                 onClick={onSearch} 
                 startIcon={<SearchIcon />}
                 >Search
             </ButtonSearch>
-            <ButtonReset 
+            <ButtonReset
+                size="large" 
                 variant="contained" 
                 onClick={onReset}
                 startIcon={<ResetIcon />} 
