@@ -1,7 +1,7 @@
 import './index.css'
-import Track from '../../components/Track'
 import Login from '../../components/Login';
 import Search from '../../components/Search';
+import Track from '../../components/Tracks';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
